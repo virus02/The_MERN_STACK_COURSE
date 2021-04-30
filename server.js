@@ -1,13 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-
-const items = require('./routes/api/items');
 
 const app = express();
 
 //Body Parser Middleware
-app.use(bodyParser.json());
+app.use(express.json());
 
 //DB config
 const db = 'mongodb://localhost:27017/items';
@@ -24,7 +21,8 @@ mongoose
     .catch(err => console.log(err));
 
 //Use routes
-app.use('/api/items', items);
+app.use('/api/items', require('./routes/api/items'));
+app.use('/api/users', require('./routes/api/users'));
 
 const port = process.env.PORT || 5000;
 
