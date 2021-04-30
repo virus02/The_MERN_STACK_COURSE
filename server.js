@@ -10,17 +10,22 @@ const app = express();
 app.use(bodyParser.json());
 
 //DB config
-const db = require('./config/keys').mongoURI;
+const db = 'mongodb://localhost:27017/items';
 
 //Connect to Mongo
 mongoose
-    .connect(db)
+    .connect(db, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
+    })
     .then(() => console.log('MongoDB connected ...'))
     .catch(err => console.log(err));
 
 //Use routes
 app.use('/api/items', items);
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server started on PORT ${port}`));
