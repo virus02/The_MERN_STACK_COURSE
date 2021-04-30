@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const config = require('config')
 
 const app = express();
 
@@ -7,7 +8,7 @@ const app = express();
 app.use(express.json());
 
 //DB config
-const db = 'mongodb://localhost:27017/items';
+const db = config.get('mongoURI');
 
 //Connect to Mongo
 mongoose
@@ -23,6 +24,7 @@ mongoose
 //Use routes
 app.use('/api/items', require('./routes/api/items'));
 app.use('/api/users', require('./routes/api/users'));
+app.use('/api/auth', require('./routes/api/auth'));
 
 const port = process.env.PORT || 5000;
 
